@@ -51,11 +51,13 @@ export default async function handler(
   let currentSize = imagesToReturn.size;
 
   while (true) {
+    // @ts-ignore
     const images = await page.$$eval("article img[srcset]", (anchors) =>
       [].map.call(anchors, (img: any) => img.src)
     );
     console.log(`Found images`, images.length);
     if (images && images.length > 0) {
+      // @ts-ignore
       images.forEach((i) => {
         imagesToReturn.add(i);
       });
@@ -68,6 +70,7 @@ export default async function handler(
     }
     try {
       console.log(`Waiting for next button`);
+      // @ts-ignore
       await page.$eval(`article button[aria-label="Next"]`, (button) =>
         // @ts-ignore
         button.click()
